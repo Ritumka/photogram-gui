@@ -35,7 +35,7 @@ class PhotosController < ApplicationController
     @the_photo.caption = params.fetch("input_caption")
 
     @the_photo.save
-    redirect_to("/photos/#{@the_photo.id}", { :notice => "Photo added successfully."} )
+    redirect_to("/photos/#{@the_photo.id}", { :notice => "Photo updated successfully."} )
   end
 
   def addcomment
