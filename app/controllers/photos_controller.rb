@@ -27,12 +27,35 @@ class PhotosController < ApplicationController
     redirect_to("/photos/" + @new_photo.id.to_s, { :notice => "Photo added successfully." })
   end
 
+  def update
+    the_id = params.fetch("path_id")
+    @the_photo = Photo.where({ :id => the_id }).at(0)
+
+    @the_photo.image = params.fetch("input_image")
+    @the_photo.caption = params.fetch("input_caption")
+
+    @the_photo.save
+    redirect_to("/photos/#{@the_photo.id}", { :notice => "Photo added successfully."} )
+  end
+
+  def addcomment
+    the_id = params.fetch("path_id")
+    @the_photo = Photo.where({ :id => the_id }).at(0)
+
+    @new_comment = Comment.new
+
+    @the_photo.id = params.fetch("input_photo_id")
+    @new_comment.author_id = params.fetch("input_author_id")
+    @new_comment.body = params.fetch("input_comment")
+
+    @new_comment.save
+    redirect_to("/photos/#{@the_photo.id}", { :notice => "Photo added successfully."} )
+  end
+
   def destroy
     the_id = params.fetch("path_id")
     
-    matching_photos = Photo.where({ :id => the_id })
-
-    @the_photo = matching_photos.at(0)
+    @the_photo = Photo.where({ :id => the_id }).at(0)
 
     @the_photo.destroy
 
