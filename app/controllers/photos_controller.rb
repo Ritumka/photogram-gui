@@ -18,17 +18,13 @@ class PhotosController < ApplicationController
   end
 
   def create
-    @the_photo = Photo.new
-    @the_photo.image = params.fetch("input_image")
-    @the_photo.caption = params.fetch("input_caption")
-    @the_photo.owner_id = params.fetch("input_owner_id")
+    @new_photo = Photo.new
+    @new_photo.image = params.fetch("input_image")
+    @new_photo.caption = params.fetch("input_caption")
+    @new_photo.owner_id = params.fetch("input_owner_id")
 
-    if @the_photo.valid?
-      @the_photo.save
-      redirect_to("/photos", { :notice => "Photo added successfully." })
-    else
-      redirect_to("/photos", { :notice => "Photo failed to add successfully." })
-    end
+    @new_photo.save
+    redirect_to("/photos/" + @new_photo.id.to_s, { :notice => "Photo added successfully." })
   end
 
   def destroy
